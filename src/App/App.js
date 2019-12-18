@@ -4,9 +4,9 @@ import Stage from "./Stage";
 import Sidebar from "./Sidebar";
 import AppLayout from "./AppLayout";
 
-import GlobalStyle from "shared/styles/GlobalStyle";
+import GlobalStyle from "../shared/styles/GlobalStyles";
 
-export default App = () => {
+const App = () => {
   // const onLoad = async () => {
   //   try {
   //     await Auth.currentSession();
@@ -30,3 +30,5 @@ export default App = () => {
     </AppLayout>
   );
 };
+
+export default App;

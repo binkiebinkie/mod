@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SidebarLayout from "./SidebarLayout";
 
 const Sidebar = () => {
   // const [notes, setNotes] = useState([]);

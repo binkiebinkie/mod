@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FeaturesLayout from "./FeaturesLayout";
 
 const Features = () => {
   // const [notes, setNotes] = useState([]);
