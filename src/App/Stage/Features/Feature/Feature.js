@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import FeaturesLayout from "./FeaturesLayout";
-import Feature from "./Feature";
+import FeatureLayout from "./FeatureLayout";
 
-const Features = () => {
+const Feature = ({ title }) => {
   // const [notes, setNotes] = useState([]);
   // const [loading, setLoading] = useState(true);
 
@@ -25,15 +24,11 @@ const Features = () => {
   //   onLoad();
   // }, [authenticated]);
 
-  return (
-    <FeaturesLayout>
-      <Feature title="Create Filter" />
-    </FeaturesLayout>
-  );
+  return <FeatureLayout>{title}</FeatureLayout>;
 };
 
-// Features.propTypes = {
+// Feature.propTypes = {
 //   authenticated: PropTypes.bool.isRequired,
 // };
 
-export default Features;
+export default Feature;

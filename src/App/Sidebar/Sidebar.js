@@ -24,7 +24,12 @@ const Sidebar = () => {
   //   onLoad();
   // }, [authenticated]);
 
-  return <SidebarLayout></SidebarLayout>;
+  return (
+    <SidebarLayout>
+      <h2>CLUSTER 1.0</h2>
+      <h1>Story 1.1</h1>
+    </SidebarLayout>
+  );
 };
 
 // Sidebar.propTypes = {
