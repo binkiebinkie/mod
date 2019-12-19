@@ -7,6 +7,7 @@ const FeaturesLayout = styled.main`
   min-height: 100vh;
   position: relative;
   background: var(--dark-grey);
+  display: flex;
 `;
 
 export default FeaturesLayout;

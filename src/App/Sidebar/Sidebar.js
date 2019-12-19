@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+
 import SidebarLayout from "./SidebarLayout";
+import Description from "./Description";
+import SubTasks from "./SubTasks";
 
 const Sidebar = () => {
   // const [notes, setNotes] = useState([]);
@@ -28,6 +31,8 @@ const Sidebar = () => {
     <SidebarLayout>
       <h2>CLUSTER 1.0</h2>
       <h1>Story 1.1</h1>
+      <SubTasks />
+      <Description />
     </SidebarLayout>
   );
 };

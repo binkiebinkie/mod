@@ -24,7 +24,12 @@ const Description = () => {
   //   onLoad();
   // }, [authenticated]);
 
-  return <DescriptionLayout></DescriptionLayout>;
+  return (
+    <DescriptionLayout>
+      <h4>Description</h4>
+      <p>As a database administrator i can do stuff and other things too</p>
+    </DescriptionLayout>
+  );
 };
 
 // Description.propTypes = {

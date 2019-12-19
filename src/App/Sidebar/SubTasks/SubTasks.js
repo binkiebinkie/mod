@@ -24,7 +24,17 @@ const SubTasks = () => {
   //   onLoad();
   // }, [authenticated]);
 
-  return <SubTasksLayout></SubTasksLayout>;
+  return (
+    <SubTasksLayout>
+      <h4>To Do (0/12)</h4>
+      <ul>
+        <li>Restore odl mysql</li>
+        <li>Restore odl mysql</li>
+        <li>Restore odl mysql</li>
+      </ul>
+      <p>+ Item</p>
+    </SubTasksLayout>
+  );
 };
 
 // SubTasks.propTypes = {

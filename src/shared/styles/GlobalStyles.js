@@ -40,13 +40,18 @@ const GlobalStyle = createGlobalStyle`
   }
   h2 {
     font-weight: 700;
-    font-size: var(--large);
+    font-size: var(--font-large);
   }
   h3 {
     font-weight: 600;
-    font-size: var(--large);
+    font-size: var(--font-large);
   }
-  p {
+  h4 {
+    font-weight: 400;
+    font-size: var(--font-large);
+    text-transform:uppercase;
+  }
+  p,ul,li,a {
     font-weight: 400;
     font-size: var(--font-regular);
   }
