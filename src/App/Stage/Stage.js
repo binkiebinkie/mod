@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import StageLayout from "./StageLayout";
+
 import Features from "./Features";
+import DragContainer from "./DragContainer";
 
 const Stage = () => {
   // const [notes, setNotes] = useState([]);
@@ -28,6 +30,7 @@ const Stage = () => {
   return (
     <StageLayout>
       <Features />
+      <DragContainer />
     </StageLayout>
   );
 };
