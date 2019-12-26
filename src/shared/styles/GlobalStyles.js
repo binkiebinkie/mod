@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
     --white: rgb(255,255,255);
     --dark-grey: rgb(36,36,36);
     --grey: rgb(49,49,49);
+    --font-grey: rgb(121,121,121);
     --yellow: rgb(253,248,55);
     --green: rgb(41,249,46);
     --red: rgb(252,9,27);
