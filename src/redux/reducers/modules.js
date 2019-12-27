@@ -1,7 +1,8 @@
-import { UPDATE_SELECTED_MODULE } from "../actionTypes";
+import { UPDATE_SELECTED_MODULE, ADD_MODULES } from "../actionTypes";
 
 const initialState = {
-  selectedModule: null
+  selectedModule: null,
+  modules: []
 };
 
 export default function(state = initialState, action) {
@@ -11,6 +12,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         selectedModule: id
+      };
+    }
+    case ADD_MODULES: {
+      const { arrayOfNewModules } = action.payload;
+      return {
+        ...state,
+        modules: [...state.modules, ...arrayOfNewModules]
       };
     }
     // case TOGGLE_TODO: {

@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+
+import { addNewModules } from "../../../redux/actions";
 
 import { useDrop } from "react-dnd";
 import DNDTypes from "../../../shared/DNDTypes";
@@ -7,26 +10,9 @@ import DragContainerLayout from "./DragContainerLayout";
 import Module from "./Module";
 import NewModule from "./NewModule";
 
-const modulesData = [
-  {
-    id: "1.0",
-    title: "Module",
-    tasks: ["1.1 Task", "1.2 Story", "1.3 Task", "1.4 Task"],
-    top: 400,
-    left: 60
-  },
-  {
-    id: "2.0",
-    title: "Module",
-    tasks: ["2.1 Task", "2.2 Story", "2.3 Task", "2.4 Task"],
-    top: 40,
-    left: 690
-  }
-];
-
-const DragContainer = () => {
+const DragContainer = ({ stateModules, dispatchAddNewModules }) => {
   // related to Drag and Drop
-  const [modules, setModules] = useState(modulesData);
+  // const [modules, setModules] = useState(modules);
   const [, drop] = useDrop({
     accept: DNDTypes.MODULE,
     drop(item, monitor) {
@@ -38,12 +24,12 @@ const DragContainer = () => {
     }
   });
   const moveModule = (id, left, top) => {
-    const currentModules = [...modules];
+    const currentModules = [...stateModules];
     const foundModule = currentModules.find(mod => mod.id === id);
     foundModule.left = left;
     foundModule.top = top;
 
-    setModules([...currentModules]);
+    dispatchAddNewModules([...currentModules]);
   };
   // for editing and adding an input
   const [newModule, isCreatingModule] = useState({ x: null, y: null });
@@ -59,36 +45,41 @@ const DragContainer = () => {
 
   // once title is verified, actually create a module
   const createModule = (x, y, title) => {
-    setModules([
-      ...modules,
-      {
-        id: "2.0",
-        title: "Module",
-        tasks: [
-          {
-            task_title: "Story 1.1",
-            subtasks: [
-              {
-                subtask_title: "Restore Old MySQL",
-                isComplete: true
-              }
-            ]
-          },
-          "2.2 Story",
-          "2.3 Task",
-          "2.4 Task"
-        ],
-        top: 40,
-        left: 690
-      }
-    ]);
+    console.log("createModule");
+    // setModules([
+    //   ...modules,
+    //   {
+    //     id: "2.0",
+    //     title: "Module",
+    //     tasks: [
+    //       {
+    //         task_title: "Story 1.1",
+    //         subtasks: [
+    //           {
+    //             subtask_title: "Restore Old MySQL",
+    //             isComplete: true
+    //           }
+    //         ]
+    //       },
+    //       "2.2 Story",
+    //       "2.3 Task",
+    //       "2.4 Task"
+    //     ],
+    //     top: 40,
+    //     left: 690
+    //   }
+    // ]);
   };
 
   return (
     <DragContainerLayout ref={drop} onDoubleClick={e => createModuleInput(e)}>
-      {modules.map(thisModule => (
-        <Module thisModule={thisModule} key={thisModule.id} />
-      ))}
+      {stateModules && stateModules.length > 0 ? (
+        stateModules.map(thisModule => (
+          <Module thisModule={thisModule} key={thisModule.id} />
+        ))
+      ) : (
+        <p>loading</p>
+      )}
       {newModule.x && newModule.y ? (
         <NewModule
           x={newModule.x}
@@ -100,4 +91,17 @@ const DragContainer = () => {
   );
 };
 
-export default DragContainer;
+const mapStateToProps = state => {
+  return {
+    stateModules: state.modules.modules
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatchAddNewModules: arrayOfNewModules =>
+      dispatch(addNewModules(arrayOfNewModules))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DragContainer);
