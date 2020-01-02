@@ -22,7 +22,7 @@ const Module = ({ thisModule }) => {
     <ModuleLayout ref={drag} top={top} left={left}>
       <h4>{title}</h4>
       {tasks.map(task => (
-        <p>{task}</p>
+        <p key={task}>{task}</p>
       ))}
     </ModuleLayout>
   );

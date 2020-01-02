@@ -11,12 +11,11 @@ const NewModule = ({ x, y, createModule }) => {
   let inputModule = React.createRef();
   useEffect(() => inputModule.current.focus());
 
-  const updateValue = e => updateText(e.value);
+  // const updateValue = e => updateText(e.value);
 
   const validateName = () => {
-    console.log(text.length);
     if (text.length > 0) createModule(x, y, text);
-    // else
+    else createModule(null, null);
   };
 
   return (
@@ -26,7 +25,7 @@ const NewModule = ({ x, y, createModule }) => {
         ref={inputModule}
         placeholder="<Module Name>"
         onBlur={e => validateName(e)}
-        onChange={e => updateValue(e)}
+        onChange={e => updateText(e.target.value)}
         onKeyPress={e => {
           if (e.key === "Enter") validateName();
         }}
