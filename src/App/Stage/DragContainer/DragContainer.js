@@ -9,7 +9,6 @@ import axios from "axios";
 import DragContainerLayout from "./DragContainerLayout";
 import Module from "./Module";
 import NewModule from "./NewModule";
-import { serverUrl } from "../../../config";
 
 const DragContainer = ({ stateModules, dispatchAddNewModules }) => {
   // related to Drag and Drop
@@ -18,29 +17,23 @@ const DragContainer = ({ stateModules, dispatchAddNewModules }) => {
     accept: DNDTypes.MODULE,
     drop(item, monitor) {
       const delta = monitor.getDifferenceFromInitialOffset();
-      const left = Math.round(item.left + delta.x);
-      const top = Math.round(item.top + delta.y);
-      moveModule(item.id, left, top);
+      const x = Math.round(item.x + delta.x);
+      const y = Math.round(item.y + delta.y);
+      moveModule(item.id, x, y);
       return undefined;
     }
   });
-  const moveModule = (id, left, top) => {
+  const moveModule = (id, x, y) => {
     const currentModules = [...stateModules];
     const foundModule = currentModules.find(mod => mod.id === id);
-    foundModule.left = left;
-    foundModule.top = top;
+    foundModule.x = x;
+    foundModule.y = y;
 
     dispatchAddNewModules([...currentModules]);
   };
-  // for editing and adding an input
+
+  // CREATE NEW MODULE
   const [newModule, isCreatingModule] = useState({ x: null, y: null });
-  const [editingModule, isEditingModule] = useState({
-    id: null,
-    x: null,
-    y: null,
-    name: "",
-    tickets: []
-  });
 
   // create new module input
   const createModuleInput = e => {
@@ -67,44 +60,57 @@ const DragContainer = ({ stateModules, dispatchAddNewModules }) => {
       regionId: null
     };
 
-    // const body = JSON.stringify(data);
-    console.log(body);
     const options = {
       method: "POST",
-      // mode: "no-cors",
-      // crossDomain: true,
-
       headers: {
-        // prettier-ignore
-        // "Accept": "application/json",
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify(body)
     };
-    console.log(url);
-    console.log(options);
 
     //stop creating a module
     isCreatingModule({ x: null, y: null });
-    // begin adding tasks to module
-    isEditingModule({ id: null, x, y, name, tickets: [] });
 
-    const response = await fetch(url, options)
+    // Update state to reflect new module added
+    dispatchAddNewModules([
+      ...stateModules,
+      {
+        id: "awaiting-resp",
+        regionId: 0,
+        name: "string",
+        description: "string"
+      }
+    ]);
+
+    // begin adding tasks to module
+    isEditingModule("awaiting-resp");
+
+    await fetch(url, options)
       .then(resp => resp.json())
       .then(responseJson => {
-        console.log("responseJson", responseJson);
-      });
+        const currentModule = stateModules.indexOf(
+          mod => mod.id === isEditingModuleId
+        );
 
-    console.log(response);
-    console.log(response.data);
+        dispatchAddNewModules([...stateModules, stateModules[currentModule]]);
+        console.log("responseJson", responseJson);
+        isEditingModule(responseJson.id);
+      });
   };
+
+  // ADD TASKS TO EXISTING MODULE
+  const [isEditingModuleId, isEditingModule] = useState(null);
 
   return (
     <DragContainerLayout ref={drop} onDoubleClick={e => createModuleInput(e)}>
       {stateModules && stateModules.length > 0 ? (
         stateModules.map(thisModule => (
-          <Module thisModule={thisModule} key={thisModule.id} />
+          <Module
+            thisModule={thisModule}
+            key={thisModule.id}
+            isEditingModuleId={isEditingModuleId}
+          />
         ))
       ) : (
         <p>loading</p>

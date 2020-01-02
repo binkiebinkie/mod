@@ -17,18 +17,32 @@ const App = ({ dispatchAddNewModules }) => {
 
     return dispatchAddNewModules([
       {
-        id: "1.0",
-        title: "Module",
-        tasks: ["1.1 Task", "1.2 Story", "1.3 Task", "1.4 Task"],
-        top: 400,
-        left: 60
+        id: 0,
+        regionId: 0,
+        name: "string",
+        description: "string",
+        edges: [0],
+        position: {
+          x: 400,
+          y: 60
+        },
+        gid: 0,
+        createdAt: "2020-01-02T11:28:35.909Z",
+        updatedAt: "2020-01-02T11:28:35.909Z"
       },
       {
-        id: "2.0",
-        title: "Module",
-        tasks: ["2.1 Task", "2.2 Story", "2.3 Task", "2.4 Task"],
-        top: 40,
-        left: 690
+        id: 1,
+        regionId: 0,
+        name: "string",
+        description: "string",
+        edges: [0],
+        position: {
+          x: 40,
+          y: 690
+        },
+        gid: 1,
+        createdAt: "2020-01-02T11:28:35.909Z",
+        updatedAt: "2020-01-02T11:28:35.909Z"
       }
     ]);
   };
