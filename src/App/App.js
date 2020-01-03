@@ -9,13 +9,13 @@ import GlobalStyle from "../shared/styles/GlobalStyles";
 
 import { addNewModules } from "../redux/actions";
 
-const App = ({ dispatchAddNewModules }) => {
+const App = ({ dispatchAddNewModule }) => {
   // const [modules, updateModules] = useState([]);
 
   const getModules = async () => {
     // addNewModules()
 
-    return dispatchAddNewModules([
+    return dispatchAddNewModule([
       {
         id: 0,
         regionId: 0,
@@ -62,8 +62,8 @@ const App = ({ dispatchAddNewModules }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchAddNewModules: arrayOfNewModules =>
-      dispatch(addNewModules(arrayOfNewModules))
+    dispatchAddNewModule: newModuleInArray =>
+      dispatch(addNewModules(newModuleInArray))
   };
 };
 

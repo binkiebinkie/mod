@@ -4,7 +4,7 @@ import ModuleLayout from "./ModuleLayout";
 import { useDrag } from "react-dnd";
 import DNDTypes from "../../../../shared/DNDTypes";
 
-const Module = ({ thisModule }) => {
+const Module = ({ thisModule, isEditingModuleId }) => {
   console.log(thisModule);
   const { name, position, id, edges } = thisModule;
   const { x, y } = position;

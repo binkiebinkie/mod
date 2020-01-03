@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { addNewModules } from "../../../redux/actions";
+import { addNewModules, replaceModule } from "../../../redux/actions";
 
 import { useDrop } from "react-dnd";
 import DNDTypes from "../../../shared/DNDTypes";
@@ -10,7 +10,11 @@ import DragContainerLayout from "./DragContainerLayout";
 import Module from "./Module";
 import NewModule from "./NewModule";
 
-const DragContainer = ({ stateModules, dispatchAddNewModules }) => {
+const DragContainer = ({
+  stateModules,
+  dispatchAddNewModule,
+  dispatchReplaceModule
+}) => {
   // related to Drag and Drop
   // const [modules, setModules] = useState(modules);
   const [, drop] = useDrop({
@@ -29,7 +33,7 @@ const DragContainer = ({ stateModules, dispatchAddNewModules }) => {
     foundModule.x = x;
     foundModule.y = y;
 
-    dispatchAddNewModules([...currentModules]);
+    dispatchAddNewModule([...currentModules]);
   };
 
   // CREATE NEW MODULE
@@ -43,6 +47,9 @@ const DragContainer = ({ stateModules, dispatchAddNewModules }) => {
       y: e.clientY
     });
   };
+
+  // ADD TASKS TO EXISTING MODULE
+  const [isEditingModuleId, isEditingModule] = useState("");
 
   // once title is verified, actually create a module
   const createModule = async (x, y, name) => {
@@ -72,46 +79,42 @@ const DragContainer = ({ stateModules, dispatchAddNewModules }) => {
     //stop creating a module
     isCreatingModule({ x: null, y: null });
 
+    // create random id until we find info from server lol
+    const randomId = Math.random() * 1000;
+
     // Update state to reflect new module added
-    dispatchAddNewModules([
-      ...stateModules,
+    dispatchAddNewModule([
       {
-        id: "awaiting-resp",
+        id: randomId,
         regionId: 0,
-        name: "string",
-        description: "string"
+        name,
+        description: "Please enter a description",
+        position: { x, y },
+        replaceWhenFetchingDone: true
       }
     ]);
 
     // begin adding tasks to module
-    isEditingModule("awaiting-resp");
+    isEditingModule(randomId);
 
     await fetch(url, options)
       .then(resp => resp.json())
-      .then(responseJson => {
-        const currentModule = stateModules.indexOf(
-          mod => mod.id === isEditingModuleId
-        );
-
-        dispatchAddNewModules([...stateModules, stateModules[currentModule]]);
-        console.log("responseJson", responseJson);
-        isEditingModule(responseJson.id);
-      });
+      .then(newModule => dispatchReplaceModule(newModule));
   };
-
-  // ADD TASKS TO EXISTING MODULE
-  const [isEditingModuleId, isEditingModule] = useState(null);
 
   return (
     <DragContainerLayout ref={drop} onDoubleClick={e => createModuleInput(e)}>
       {stateModules && stateModules.length > 0 ? (
-        stateModules.map(thisModule => (
-          <Module
-            thisModule={thisModule}
-            key={thisModule.id}
-            isEditingModuleId={isEditingModuleId}
-          />
-        ))
+        stateModules.map(thisModule => {
+          console.log(thisModule);
+          return (
+            <Module
+              thisModule={thisModule}
+              key={thisModule.id + 1 * Math.random()}
+              isEditingModuleId={isEditingModuleId}
+            />
+          );
+        })
       ) : (
         <p>loading</p>
       )}
@@ -134,8 +137,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchAddNewModules: arrayOfNewModules =>
-      dispatch(addNewModules(arrayOfNewModules))
+    dispatchAddNewModule: newModuleInArray =>
+      dispatch(addNewModules(newModuleInArray)),
+    dispatchReplaceModule: newModule => dispatch(replaceModule(newModule))
   };
 };
 
