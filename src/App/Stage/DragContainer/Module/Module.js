@@ -5,11 +5,20 @@ import { useDrag } from "react-dnd";
 import DNDTypes from "../../../../shared/DNDTypes";
 
 const Module = ({ thisModule, isEditingModuleId }) => {
-  console.log(thisModule);
+  // console.log(thisModule);
   const { name, position, id, edges } = thisModule;
-  const { x, y } = position;
-  // const [notes, setNotes] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  // to be uncommented when API fixed
+  // const { x, y } = position;
+
+  let x, y;
+  if (position) {
+    x = position.x;
+    y = position.y;
+  } else {
+    x = 100;
+    y = 100;
+  }
+
   const [{ isDragging }, drag] = useDrag({
     item: { id, x, y, type: DNDTypes.MODULE },
     collect: monitor => ({
@@ -29,3 +38,11 @@ const Module = ({ thisModule, isEditingModuleId }) => {
 };
 
 export default Module;
+
+/*
+MEETING NOTES
+
+Need server to return position if I send it
+how do you recommend i get all modules / tickets on load
+
+*/

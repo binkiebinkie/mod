@@ -19,26 +19,21 @@ export default function(state = initialState, action) {
       };
     }
     case ADD_MODULES: {
-      const { newModuleInArray } = action.payload;
+      const { newModulesInArray } = action.payload;
       return {
         ...state,
-        modules: [...state.modules, ...newModuleInArray]
+        modules: [...state.modules, ...newModulesInArray]
       };
     }
     case REPLACE_MODULE: {
       const { newModule } = action.payload;
-      console.log(newModule);
-
-      const replaceIndex = state.modules.indexOf(
-        thisModule => thisModule.replaceWhenFetchingDone === true
-      );
-      console.log(replaceIndex);
+      // find one to be replaced
+      const replaceIndex = state.modules
+        .map(mod => mod.replaceWhenFetchingDone)
+        .indexOf(true);
 
       const newModules = [...state.modules];
-      console.log(newModules[replaceIndex]);
-
       newModules[replaceIndex] = newModule;
-      console.log(newModules);
 
       return {
         ...state,

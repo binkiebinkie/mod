@@ -1,17 +1,20 @@
 import {
   UPDATE_SELECTED_MODULE,
   ADD_MODULES,
-  REPLACE_MODULE
+  REPLACE_MODULE,
+  UPDATE_SELECTED_TICKET,
+  ADD_TICKETS
 } from "./actionTypes";
 
+// MODULES
 export const updateSelectedModule = id => ({
   type: UPDATE_SELECTED_MODULE,
   payload: { id }
 });
 
-export const addNewModules = newModuleInArray => ({
+export const addNewModules = newModulesInArray => ({
   type: ADD_MODULES,
-  payload: { newModuleInArray }
+  payload: { newModulesInArray }
 });
 
 export const replaceModule = newModule => ({
@@ -19,4 +22,13 @@ export const replaceModule = newModule => ({
   payload: { newModule }
 });
 
-// export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
+// TICKETS
+export const updateSelectedTicket = id => ({
+  type: UPDATE_SELECTED_TICKET,
+  payload: { id }
+});
+
+export const addNewTickets = newTicketsInArray => ({
+  type: ADD_TICKETS,
+  payload: { newTicketsInArray }
+});

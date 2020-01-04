@@ -105,16 +105,13 @@ const DragContainer = ({
   return (
     <DragContainerLayout ref={drop} onDoubleClick={e => createModuleInput(e)}>
       {stateModules && stateModules.length > 0 ? (
-        stateModules.map(thisModule => {
-          console.log(thisModule);
-          return (
-            <Module
-              thisModule={thisModule}
-              key={thisModule.id + 1 * Math.random()}
-              isEditingModuleId={isEditingModuleId}
-            />
-          );
-        })
+        stateModules.map(thisModule => (
+          <Module
+            thisModule={thisModule}
+            key={thisModule.id + 1 * Math.random()}
+            isEditingModuleId={isEditingModuleId}
+          />
+        ))
       ) : (
         <p>loading</p>
       )}

@@ -9,13 +9,49 @@ import GlobalStyle from "../shared/styles/GlobalStyles";
 
 import { addNewModules } from "../redux/actions";
 
-const App = ({ dispatchAddNewModule }) => {
+const App = ({ dispatchAddNewModules, dispatchAddNewTickets }) => {
   // const [modules, updateModules] = useState([]);
 
   const getModules = async () => {
     // addNewModules()
 
-    return dispatchAddNewModule([
+    dispatchAddNewTickets([
+      {
+        id: 0,
+        parentId: 0,
+        moduleId: 0,
+        featureIds: [0],
+        features: [
+          {
+            id: 0,
+            name: "string",
+            description: "string",
+            gid: 0,
+            createdAt: "2020-01-04T16:42:16.421Z",
+            updatedAt: "2020-01-04T16:42:16.421Z"
+          }
+        ],
+        tagIds: [0],
+        tags: [
+          {
+            id: 0,
+            name: "string",
+            gid: 0,
+            createdAt: "2020-01-04T16:42:16.421Z",
+            updatedAt: "2020-01-04T16:42:16.421Z"
+          }
+        ],
+        subTickets: [null],
+        ticketType: 0,
+        description: "string",
+        title: "string",
+        gid: 0,
+        createdAt: "2020-01-04T16:42:16.421Z",
+        updatedAt: "2020-01-04T16:42:16.421Z"
+      }
+    ]);
+
+    return dispatchAddNewModules([
       {
         id: 0,
         regionId: 0,
@@ -62,8 +98,10 @@ const App = ({ dispatchAddNewModule }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchAddNewModule: newModuleInArray =>
-      dispatch(addNewModules(newModuleInArray))
+    dispatchAddNewModules: newModulesInArray =>
+      dispatch(addNewModules(newModulesInArray)),
+    dispatchAddNewTickets: newTicketsInArray =>
+      dispatch(addNewModules(newTicketsInArray))
   };
 };
 
