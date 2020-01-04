@@ -95,12 +95,15 @@ const DragContainer = ({
     ]);
 
     // begin adding tasks to module
-    isEditingModule(randomId);
-
-    await fetch(url, options)
+    const moduleFromServer = await fetch(url, options)
       .then(resp => resp.json())
-      .then(newModule => dispatchReplaceModule(newModule));
+      .then(newModule => newModule);
+
+    isEditingModule(moduleFromServer.id);
+    return dispatchReplaceModule(moduleFromServer);
   };
+
+  const stopEditingModule = () => isEditingModule("");
 
   return (
     <DragContainerLayout ref={drop} onDoubleClick={e => createModuleInput(e)}>
@@ -110,6 +113,8 @@ const DragContainer = ({
             thisModule={thisModule}
             key={thisModule.id + 1 * Math.random()}
             isEditingModuleId={isEditingModuleId}
+            isEditingModule={isEditingModule}
+            stopEditingModule={stopEditingModule}
           />
         ))
       ) : (
@@ -134,8 +139,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchAddNewModule: newModuleInArray =>
-      dispatch(addNewModules(newModuleInArray)),
+    dispatchAddNewModule: newModulesInArray =>
+      dispatch(addNewModules(newModulesInArray)),
     dispatchReplaceModule: newModule => dispatch(replaceModule(newModule))
   };
 };

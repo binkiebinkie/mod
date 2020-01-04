@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import NewModuleLayout from "./NewModuleLayout";
 import NewModuleTitle from "./NewModuleTitle";
 
-import { useDrag } from "react-dnd";
-import DNDTypes from "../../../../shared/DNDTypes";
-
 const NewModule = ({ x, y, createModule }) => {
   const [text, updateText] = useState("");
 

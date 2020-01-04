@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const NewModuleTitle = styled.input`
+const NewTicketTitle = styled.input`
   position: relative;
   width: 100%;
   padding: 0;
@@ -9,4 +9,4 @@ const NewModuleTitle = styled.input`
   color: var(--font-grey);
 `;
 
-export default NewModuleTitle;
+export default NewTicketTitle;

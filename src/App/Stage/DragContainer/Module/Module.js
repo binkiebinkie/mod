@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from "react";
 import ModuleLayout from "./ModuleLayout";
+import { connect } from "react-redux";
+import { addNewTickets, replaceTicket } from "../../../../redux/actions";
 
 import { useDrag } from "react-dnd";
 import DNDTypes from "../../../../shared/DNDTypes";
 
-const Module = ({ thisModule, isEditingModuleId }) => {
-  // console.log(thisModule);
-  const { name, position, id, edges } = thisModule;
+import NewTicket from "./NewTicket";
+import TicketLayout from "./TicketLayout";
+
+const Module = ({
+  thisModule,
+  isEditingModuleId,
+  isEditingModule,
+  stateTickets,
+  stopEditingModule,
+  dispatchAddNewTickets,
+  dispatchReplaceTicket
+}) => {
+  console.log(isEditingModuleId);
+  const { name, position, id, replaceWhenFetchingDone } = thisModule;
   // to be uncommented when API fixed
   // const { x, y } = position;
 
+  // to be commented when API fixed
   let x, y;
   if (position) {
     x = position.x;
@@ -29,20 +43,96 @@ const Module = ({ thisModule, isEditingModuleId }) => {
     return <div ref={drag} />;
   }
 
+  // if the new ticket name added is valid, create new ticket
+  const createTicket = async (title, parentModuleId, enterWasPressed) => {
+    if (title.length <= 0) return stopEditingModule();
+
+    // create random id until we find info from server lol
+    const randomId = Math.random() * 1000;
+
+    dispatchAddNewTickets([
+      {
+        id: randomId,
+        parentId: 0,
+        moduleId: parentModuleId,
+        featureIds: [0],
+        features: [],
+        tagIds: [0],
+        tags: [],
+        subTickets: [null],
+        ticketType: 0,
+        description: "string",
+        title,
+        replaceWhenFetchingDone: true
+      }
+    ]);
+
+    // If enter was pressed we wanna begin automatically creating a new Ticket
+    if (enterWasPressed) {
+      isEditingModule(isEditingModuleId);
+    } else {
+      // Otherwise, don't begin creating a new module
+      stopEditingModule();
+    }
+
+    const url = `/api/Ticket`;
+    const body = {
+      title,
+      description: null
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(body)
+    };
+    const ticketFromServer = await fetch(url, options)
+      .then(resp => resp.json())
+      .then(newTicket => newTicket);
+
+    return dispatchReplaceTicket(ticketFromServer);
+  };
+
   return (
     <ModuleLayout ref={drag} top={x} left={y}>
       <h4>{name}</h4>
-      {edges && edges.map(edge => <p key={edge}>{edge}</p>)}
+      {stateTickets.map(ticket =>
+        ticket.moduleId === id ? (
+          <TicketLayout key={ticket.moduleId}>{ticket.title}</TicketLayout>
+        ) : null
+      )}
+      {replaceWhenFetchingDone || isEditingModuleId === id ? (
+        <NewTicket createTicket={createTicket} moduleId={id} />
+      ) : null}
     </ModuleLayout>
   );
 };
 
-export default Module;
+const mapStateToProps = state => {
+  return {
+    stateTickets: state.tickets.tickets
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatchAddNewTickets: newTicketsInArray =>
+      dispatch(addNewTickets(newTicketsInArray)),
+    dispatchReplaceTicket: newTicket => dispatch(replaceTicket(newTicket))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Module);
 
 /*
 MEETING NOTES
 
 Need server to return position if I send it
 how do you recommend i get all modules / tickets on load
+For each module do you plan on storing the id's of associated tickets? If so, this would be less expensive for me to implement mapping over the tickets on the front end
+
 
 */

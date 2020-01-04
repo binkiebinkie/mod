@@ -2,7 +2,7 @@ import {
   UPDATE_SELECTED_MODULE,
   ADD_MODULES,
   REPLACE_MODULE,
-  UPDATE_SELECTED_TICKET,
+  REPLACE_TICKET,
   ADD_TICKETS
 } from "./actionTypes";
 
@@ -23,9 +23,9 @@ export const replaceModule = newModule => ({
 });
 
 // TICKETS
-export const updateSelectedTicket = id => ({
-  type: UPDATE_SELECTED_TICKET,
-  payload: { id }
+export const replaceTicket = newTicket => ({
+  type: REPLACE_TICKET,
+  payload: { newTicket }
 });
 
 export const addNewTickets = newTicketsInArray => ({

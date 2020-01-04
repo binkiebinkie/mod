@@ -1,4 +1,4 @@
-import { UPDATE_SELECTED_TICKET, ADD_TICKETS } from "../actionTypes";
+import { REPLACE_TICKET, ADD_TICKETS } from "../actionTypes";
 
 const initialState = {
   // selectedModule: null,
@@ -14,40 +14,35 @@ export default function(state = initialState, action) {
     //     selectedModule: id
     //   };
     // }
-    // case ADD_MODULES: {
-    //   const { newModuleInArray } = action.payload;
-    //   return {
-    //     ...state,
-    //     modules: [...state.modules, ...newModuleInArray]
-    //   };
-    // }
-    // case REPLACE_MODULE: {
-    //   const { newModule } = action.payload;
-    //   console.log(newModule);
-    //   console.log(state.modules);
+    case ADD_TICKETS: {
+      const { newTicketsInArray } = action.payload;
+      return {
+        ...state,
+        tickets: [...state.tickets, ...newTicketsInArray]
+      };
+    }
+    case REPLACE_TICKET: {
+      const { newTicket } = action.payload;
+      console.log(newTicket);
+      console.log(state.tickets);
 
-    //   // const replaceIndex = state.modules.indexOf(thisModule => {
-    //   //   console.log(thisModule);
-    //   //   return thisModule.replaceWhenFetchingDone === true;
-    //   // });
+      // find one to be replaced
+      const replaceIndex = state.tickets
+        .map(mod => mod.replaceWhenFetchingDone)
+        .indexOf(true);
+      console.log(replaceIndex);
 
-    //   // find one to be replaced
-    //   const replaceIndex = state.modules
-    //     .map(mod => mod.replaceWhenFetchingDone)
-    //     .indexOf(true);
-    //   console.log(replaceIndex);
+      const newTickets = [...state.tickets];
+      console.log(newTickets[replaceIndex]);
 
-    //   const newModules = [...state.modules];
-    //   console.log(newModules[replaceIndex]);
+      newTickets[replaceIndex] = newTicket;
+      console.log(newTickets);
 
-    //   newModules[replaceIndex] = newModule;
-    //   console.log(newModules);
-
-    //   return {
-    //     ...state,
-    //     modules: [...newModules]
-    //   };
-    // }
+      return {
+        ...state,
+        tickets: [...newTickets]
+      };
+    }
     default:
       return state;
   }
