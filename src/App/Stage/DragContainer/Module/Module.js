@@ -31,7 +31,6 @@ const Module = ({
     x = 100;
     y = 100;
   }
-  console.log(x, y);
 
   const [{ isDragging }, drag] = useDrag({
     item: { id, x, y, type: DNDTypes.MODULE },
@@ -97,7 +96,7 @@ const Module = ({
   };
 
   return (
-    <ModuleLayout ref={drag} top={x} left={y}>
+    <ModuleLayout ref={drag} x={x} y={y}>
       <h4>{name}</h4>
       {stateTickets.map(ticket =>
         ticket.moduleId === id ? (
