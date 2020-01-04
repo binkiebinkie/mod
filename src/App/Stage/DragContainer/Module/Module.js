@@ -18,7 +18,6 @@ const Module = ({
   dispatchAddNewTickets,
   dispatchReplaceTicket
 }) => {
-  console.log(isEditingModuleId);
   const { name, position, id, replaceWhenFetchingDone } = thisModule;
   // to be uncommented when API fixed
   // const { x, y } = position;
@@ -32,6 +31,7 @@ const Module = ({
     x = 100;
     y = 100;
   }
+  console.log(x, y);
 
   const [{ isDragging }, drag] = useDrag({
     item: { id, x, y, type: DNDTypes.MODULE },

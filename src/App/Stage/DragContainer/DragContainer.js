@@ -4,7 +4,6 @@ import { addNewModules, replaceModule } from "../../../redux/actions";
 
 import { useDrop } from "react-dnd";
 import DNDTypes from "../../../shared/DNDTypes";
-import axios from "axios";
 
 import DragContainerLayout from "./DragContainerLayout";
 import Module from "./Module";
