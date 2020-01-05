@@ -7,7 +7,7 @@ import AppLayout from "./AppLayout";
 
 import GlobalStyle from "../shared/styles/GlobalStyles";
 
-import { addNewModules } from "../redux/actions";
+import { addNewModules, addNewTickets } from "../redux/actions";
 
 const App = ({ dispatchAddNewModules, dispatchAddNewTickets }) => {
   // const [modules, updateModules] = useState([]);
@@ -101,7 +101,7 @@ const mapDispatchToProps = dispatch => {
     dispatchAddNewModules: newModulesInArray =>
       dispatch(addNewModules(newModulesInArray)),
     dispatchAddNewTickets: newTicketsInArray =>
-      dispatch(addNewModules(newTicketsInArray))
+      dispatch(addNewTickets(newTicketsInArray))
   };
 };
 

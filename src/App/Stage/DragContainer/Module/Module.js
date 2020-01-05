@@ -19,18 +19,19 @@ const Module = ({
   dispatchReplaceTicket
 }) => {
   const { name, position, id, replaceWhenFetchingDone } = thisModule;
+  console.log(thisModule);
   // to be uncommented when API fixed
-  // const { x, y } = position;
+  const { x, y } = position;
 
   // to be commented when API fixed
-  let x, y;
-  if (position) {
-    x = position.x;
-    y = position.y;
-  } else {
-    x = 100;
-    y = 100;
-  }
+  // let x, y;
+  // if (position) {
+  //   x = position.x;
+  //   y = position.y;
+  // } else {
+  //   x = 100;
+  //   y = 100;
+  // }
 
   const [{ isDragging }, drag] = useDrag({
     item: { id, x, y, type: DNDTypes.MODULE },
@@ -129,9 +130,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(Module);
 /*
 MEETING NOTES
 
-Need server to return position if I send it
+Need server to return position if I send it - double check if i am making a misake
 how do you recommend i get all modules / tickets on load
 For each module do you plan on storing the id's of associated tickets? If so, this would be less expensive for me to implement mapping over the tickets on the front end
 
+putty ssh client
+
+winscp upload files
 
 */

@@ -63,7 +63,8 @@ const DragContainer = ({
     const body = {
       name,
       description: null,
-      regionId: null
+      regionId: null,
+      position: { x, y }
     };
 
     const options = {
