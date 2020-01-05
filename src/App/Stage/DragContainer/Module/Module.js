@@ -18,20 +18,12 @@ const Module = ({
   dispatchAddNewTickets,
   dispatchReplaceTicket
 }) => {
+  const [ticketTitle, updateTicketTitle] = useState("");
+
   const { name, position, id, replaceWhenFetchingDone } = thisModule;
   console.log(thisModule);
   // to be uncommented when API fixed
   const { x, y } = position;
-
-  // to be commented when API fixed
-  // let x, y;
-  // if (position) {
-  //   x = position.x;
-  //   y = position.y;
-  // } else {
-  //   x = 100;
-  //   y = 100;
-  // }
 
   const [{ isDragging }, drag] = useDrag({
     item: { id, x, y, type: DNDTypes.MODULE },
@@ -78,7 +70,8 @@ const Module = ({
     const url = `/api/Ticket`;
     const body = {
       title,
-      description: null
+      description: null,
+      moduleId: isEditingModuleId
     };
 
     const options = {
@@ -105,7 +98,12 @@ const Module = ({
         ) : null
       )}
       {replaceWhenFetchingDone || isEditingModuleId === id ? (
-        <NewTicket createTicket={createTicket} moduleId={id} />
+        <NewTicket
+          createTicket={createTicket}
+          moduleId={id}
+          ticketTitle={ticketTitle}
+          updateTicketTitle={updateTicketTitle}
+        />
       ) : null}
     </ModuleLayout>
   );
