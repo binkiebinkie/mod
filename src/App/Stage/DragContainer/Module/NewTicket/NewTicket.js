@@ -5,14 +5,14 @@ import NewTicketTitle from "./NewTicketTitle";
 const NewTicket = ({
   ticketTitle,
   updateTicketTitle,
-  createTicket,
+  ticketValidation,
   moduleId
 }) => {
   let inputTicket = React.createRef();
   useEffect(() => inputTicket.current.focus());
 
   const validateTitle = enterWasPressed =>
-    createTicket(ticketTitle, moduleId, enterWasPressed);
+    ticketValidation(ticketTitle, moduleId, enterWasPressed);
 
   return (
     <NewTicketLayout>

@@ -22,13 +22,14 @@ export default function(state = initialState, action) {
       };
     }
     case REPLACE_TICKET: {
-      const { newTicket } = action.payload;
+      const { newTicket, temporaryIdOfTicket } = action.payload;
       console.log(newTicket);
       console.log(state.tickets);
+      console.log("temporaryIdOfTicket", temporaryIdOfTicket);
 
       // find one to be replaced
       const replaceIndex = state.tickets
-        .map(mod => mod.replaceWhenFetchingDone)
+        .map(mod => mod.id === temporaryIdOfTicket)
         .indexOf(true);
       console.log(replaceIndex);
 

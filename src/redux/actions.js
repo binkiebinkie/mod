@@ -23,9 +23,9 @@ export const replaceModule = newModule => ({
 });
 
 // TICKETS
-export const replaceTicket = newTicket => ({
+export const replaceTicket = (newTicket, temporaryIdOfTicket) => ({
   type: REPLACE_TICKET,
-  payload: { newTicket }
+  payload: { newTicket, temporaryIdOfTicket }
 });
 
 export const addNewTickets = newTicketsInArray => ({
